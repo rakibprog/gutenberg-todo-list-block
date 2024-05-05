@@ -15,10 +15,19 @@ import { useBlockProps } from '@wordpress/block-editor';
  *
  * @return {Element} Element to render.
  */
-export default function save() {
-	return (
-		<p { ...useBlockProps.save() }>
-			{ 'Todo List – hello from the saved content!' }
-		</p>
-	);
+export default function save( { attributes } ) {
+    const { showStartingYear, startingYear } = attributes;
+    const currentYear = new Date().getFullYear().toString();
+
+    let displayDate;
+
+    if ( showStartingYear && startingYear ) {
+        displayDate = startingYear + '–' + currentYear;
+    } else {
+        displayDate = currentYear;
+    }
+
+    return (
+        <p { ...useBlockProps.save() }>© { displayDate }</p>
+    );
 }
